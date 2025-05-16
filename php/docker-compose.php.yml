@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  php:
+    image: php:8.4-fpm
+    container_name: php_container
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./php/src:/var/www/html
+      - ./php/logs:/var/log/php
+      - ./php/conf.d:/usr/local/etc/php/conf.d
+    networks:
+      - php_network
+    environment:
+      PHP_DISPLAY_ERRORS: "On"
+      PHP_MEMORY_LIMIT: "256M"
+
+networks:
+  php_network:
+    driver: bridge
